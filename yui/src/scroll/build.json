@@ -1,0 +1,10 @@
+{
+  "name": "moodle-block_culactivity_stream-scroll",
+  "builds": {
+    "moodle-block_culactivity_stream-scroll": {
+      "jsfiles": [
+        "scroll.js"
+      ]
+    }
+  }
+}

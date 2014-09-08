@@ -1,0 +1,12 @@
+{
+  "moodle-block_culactivity_stream-scroll": {
+    "requires": [
+        "base",
+        "node",
+        "io",
+        "json-parse",
+        "dom-core",
+        "querystring"
+    ]
+  }
+}
