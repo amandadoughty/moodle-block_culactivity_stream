@@ -1,4 +1,4 @@
-div.block_culactivity_stream div.content {
+.block_culactivity_stream .content {
     position: relative;
     padding: 0;
     margin: 0;
@@ -18,7 +18,7 @@ div.block_culactivity_stream div.content {
 
 }
 
-.block_culactivity_stream li {
+.block_culactivity_stream .content li {
     padding: 1%;
     line-height: 16px;
 }
@@ -94,17 +94,15 @@ div.block_culactivity_stream div.content {
     margin: 5px 0;
 }
 
-div.block_culactivity_stream #loadinggif {
+#block_culactivity_stream_loading {
     display: none;
     text-align: center;
+    vertical-align: middle;
+    /*margin-left: -24px;*/
 }
 
-div.block_culactivity_stream #block_culactivity_stream_reload img {
+#block_culactivity_stream_reload img,
+#block_culactivity_stream_loading img {
     margin: 4px;
     margin-bottom: 6px;
-}
-
-div.block_culactivity_stream #loadinggif {
-    vertical-align: middle;
-    margin-left: -22px;
 }
