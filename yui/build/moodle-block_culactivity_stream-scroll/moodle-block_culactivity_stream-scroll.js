@@ -40,7 +40,6 @@ M.block_culactivity_stream.scroll = {
             Y.one('.pages').hide();
         }
 
-        this.reloader = Y.one('.block_culactivity_stream #block_culactivity_stream_reload');
         this.reloader.on('click', this.reloadblock, this);
         Y.all('.block_culactivity_stream .removelink').on('click', this.removenotification, this);
 
@@ -86,7 +85,7 @@ M.block_culactivity_stream.scroll = {
             // disable the scroller until this completes
             this.scroller.detach('scroll');
             Y.one('#block_culactivity_stream_reload').setStyle('display', 'none');
-            Y.one('#loadinggif').setStyle('display', 'inline-block');
+            Y.one('#block_culactivity_stream_loading').setStyle('display', 'inline-block');
 
             var params = {
                 sesskey : M.cfg.sesskey,
@@ -113,12 +112,12 @@ M.block_culactivity_stream.scroll = {
                         if (!data.end) {
                             this.scroller.on('scroll', this.filltobelowblock, this);
                         }
-                        Y.one('#loadinggif').setStyle('display', 'none');
+                        Y.one('#block_culactivity_stream_loading').setStyle('display', 'none');
                         Y.one('#block_culactivity_stream_reload').setStyle('display', 'inline-block');
                     },
                     failure: function() {
                         // error message
-                        Y.one('#loadinggif').setStyle('display', 'none');
+                        Y.one('#block_culactivity_stream_loading').setStyle('display', 'none');
                         Y.one('#block_culactivity_stream_reload').setStyle('display', 'inline-block');
                         this.timer.cancel();
                     }
@@ -135,7 +134,7 @@ M.block_culactivity_stream.scroll = {
         }
 
         Y.one('#block_culactivity_stream_reload').setStyle('display', 'none');
-        Y.one('#loadinggif').setStyle('display', 'inline-block');
+        Y.one('#block_culactivity_stream_loading').setStyle('display', 'inline-block');
 
         var params = {
             sesskey : M.cfg.sesskey,
@@ -156,12 +155,12 @@ M.block_culactivity_stream.scroll = {
                         Y.one('.block_culactivity_stream .notifications').prepend(data.output);
                         this.count = this.count + data.count;
                     }
-                    Y.one('#loadinggif').setStyle('display', 'none');
+                    Y.one('#block_culactivity_stream_loading').setStyle('display', 'none');
                     Y.one('#block_culactivity_stream_reload').setStyle('display', 'inline-block');
                 },
                 failure: function() {
                     // error message
-                    Y.one('#loadinggif').setStyle('display', 'none');
+                    Y.one('#block_culactivity_stream_loading').setStyle('display', 'none');
                     Y.one('#block_culactivity_stream_reload').setStyle('display', 'inline-block');
                     this.timer.cancel();
                 }

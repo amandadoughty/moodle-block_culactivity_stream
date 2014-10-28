@@ -70,9 +70,8 @@ class block_culactivity_stream extends block_base {
         $this->content->footer = '';
         list($count, $notifications) = block_culactivity_stream_get_notifications($COURSE->id, 0, $limitfrom, $limitnum);
         $renderer = $this->page->get_renderer('block_culactivity_stream');
-        // Can't do this in init.
-        $this->htmltitle = $renderer->culactivity_stream_reload();
-        $this->content->text = $renderer->culactivity_stream($notifications, $page);
+        $this->content->text = $renderer->culactivity_stream_reload();
+        $this->content->text .= $renderer->culactivity_stream($notifications, $page);
 
         $prev = false;
         $next = false;
@@ -126,27 +125,4 @@ class block_culactivity_stream extends block_base {
         return true;
     }
 
-    /**
-     * Return a block_contents object representing the full contents of this block.
-     *
-     * This internally calls ->get_content(), and then adds the editing controls etc.
-     *
-     * You probably should not override this method, but instead override
-     * {@link html_attributes()}, {@link formatted_contents()} or {@link get_content()},
-     * {@link hide_header()}, {@link (get_edit_controls)}, etc.
-     *
-     * @return block_contents a representation of the block, for rendering.
-     * @since Moodle 2.0.
-     */
-    public function get_content_for_output($output) {
-
-        $bc = parent::get_content_for_output($output);
-
-        if (!$this->hide_header()) {
-            $bc->title = $this->htmltitle;
-        }
-
-        return $bc;
-    }
 }
-

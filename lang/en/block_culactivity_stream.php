@@ -31,6 +31,7 @@ $string['avatarof'] = 'Avatar of {$a}';
 $string['newer'] = 'newer';
 $string['older'] = 'older';
 $string['pluginname'] = 'CUL Activity Feed Block';
+$string['reload'] = 'Refresh Feed';
 $string['second'] = 'second';
 $string['time'] = 'about {$a} ago';
 $string['visit'] = 'Visit';
