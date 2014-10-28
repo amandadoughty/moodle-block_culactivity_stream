@@ -63,6 +63,7 @@ class block_culactivity_stream_renderer extends plugin_renderer_base {
      */
     public function culactivity_stream_reload () {
         $output = '';
+        $output .= html_writer::start_tag('div', array('class' => 'reload'));
         $output .= get_string('reload', 'block_culactivity_stream');
         // Reload button.
         $reloadimg = $this->output->pix_icon('i/reload', '', 'moodle',
@@ -73,6 +74,7 @@ class block_culactivity_stream_renderer extends plugin_renderer_base {
         // Loading gif.
         $ajaximg = $this->output->pix_icon('i/loading_small', '');
         $output .= html_writer::tag('span', $ajaximg, array('id' => 'block_culactivity_stream_loading'));
+        $output .= html_writer::end_tag('div');
         return $output;
     }
 

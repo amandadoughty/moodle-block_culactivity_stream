@@ -1,7 +1,12 @@
-.block_culactivity_stream .content {
+.block.block_culactivity_stream .content {
     position: relative;
     padding: 0;
     margin: 0;
+}
+
+.block.block_culactivity_stream .reload {
+    text-align: right;
+    font-size: 0.8em;
 }
 
 .block_culactivity_stream .culactivity_stream {
@@ -18,7 +23,7 @@
 
 }
 
-.block_culactivity_stream .content li {
+.block.block_culactivity_stream .content li {
     padding: 1%;
     line-height: 16px;
 }
@@ -94,6 +99,11 @@
     margin: 5px 0;
 }
 
+#block_culactivity_stream_reload {
+    text-align: center;
+    vertical-align: middle;
+}
+
 #block_culactivity_stream_loading {
     display: none;
     text-align: center;
@@ -103,6 +113,8 @@
 
 #block_culactivity_stream_reload img,
 #block_culactivity_stream_loading img {
+    height: 12px;
+    width: 12px;
     margin: 4px;
     margin-bottom: 6px;
 }
