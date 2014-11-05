@@ -40,7 +40,7 @@ M.block_culactivity_stream.scroll = {
             Y.one('.pages').hide();
         }
 
-        this.reloader = Y.one('#block_culactivity_stream_reload'); Y.log(this.reloader);
+        this.reloader = Y.one('#block_culactivity_stream_reload');
         this.reloader.on('click', this.reloadblock, this);
         Y.all('.block_culactivity_stream .removelink').on('click', this.removenotification, this);
 
