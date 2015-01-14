@@ -68,9 +68,9 @@ M.block_culactivity_stream.scroll = {
                         h2.append(reloaddiv);
                         reloaddiv.setStyle('display', 'inline-block');
                         reloader = Y.one('.dockeditempanel_hd .block_culactivity_stream_reload');
-                        if (reloader) {
-                            reloader.on('click', this.reloadblock, this);
-                        }
+                    }
+                    if (reloader) {
+                        reloader.on('click', this.reloadblock, this);
                     }
                 },this);
             },this);
