@@ -6,7 +6,9 @@
         "io",
         "json-parse",
         "dom-core",
-        "querystring"
+        "querystring",
+        "event-custom",
+        "moodle-core-dock"
     ]
   }
 }

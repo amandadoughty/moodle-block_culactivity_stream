@@ -4,7 +4,9 @@
     margin: 0;
 }
 
-.block.block_culactivity_stream .reload {
+.block.block_culactivity_stream .reload,
+.dockeditempanel_hd .reload {
+    display: none;
     text-align: right;
     font-size: 0.8em;
 }
@@ -99,20 +101,20 @@
     margin: 5px 0;
 }
 
-#block_culactivity_stream_reload {
+.block_culactivity_stream_reload {
     text-align: center;
     vertical-align: middle;
 }
 
-#block_culactivity_stream_loading {
+.block_culactivity_stream_loading {
     display: none;
     text-align: center;
     vertical-align: middle;
     /*margin-left: -24px;*/
 }
 
-#block_culactivity_stream_reload img,
-#block_culactivity_stream_loading img {
+.block_culactivity_stream_reload img,
+.block_culactivity_stream_loading img {
     height: 12px;
     width: 12px;
     margin: 4px;

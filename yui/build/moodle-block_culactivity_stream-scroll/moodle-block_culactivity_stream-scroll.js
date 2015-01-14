@@ -31,7 +31,6 @@ M.block_culactivity_stream.scroll = {
     count: null,
     courseid: null,
     scroller: null,
-    reloader: null,
     timer: null,
 
     init: function(params) {
@@ -40,18 +39,42 @@ M.block_culactivity_stream.scroll = {
             Y.one('.pages').hide();
         }
 
-        this.reloader = Y.one('#block_culactivity_stream_reload');
-        this.reloader.on('click', this.reloadblock, this);
+        var reloaddiv = Y.one('.reload');
+        var h2 = Y.one('.block_culactivity_stream .header .title h2');
+        h2.append(reloaddiv);
+        reloaddiv.setStyle('display', 'inline-block');
+        Y.one('.reload .block_culactivity_stream_reload').on('click', this.reloadblock, this);
         Y.all('.block_culactivity_stream .removelink').on('click', this.removenotification, this);
-
         this.scroller = Y.one('.block_culactivity_stream .culactivity_stream');
         this.scroller.on('scroll', this.filltobelowblock, this);
         this.limitnum = params.limitnum;
         this.count = params.count;
         this.courseid = params.courseid;
-        // Refresh the feed every 5 mins
+        // Refresh the feed every 5 mins.
         this.timer = Y.later(1000 * 60 * 5, this, this.reloadnotifications, [], true);
         this.filltobelowblock();
+        // When the block is docked. the reload link is created on the fly as the block
+        // is shown. This means that the click event is not attached. Here we listen for
+        // published events about changes to the dock so that we can reattach the click
+        // event to the reload link.
+        var dock = M.core.dock.get();
+        dock.on(['dock:initialised', 'dock:itemadded'], function() {
+            Y.Array.each(dock.dockeditems, function(dockeditem) {
+                dockeditem.on('dockeditem:showcomplete', function() {
+                    var reloader = Y.one('.dockeditempanel_hd .block_culactivity_stream_reload');
+                    if (!reloader) {
+                        var reloaddiv = Y.one('.reload').cloneNode(true);
+                        var h2 = Y.one('.dockeditempanel_hd h2');
+                        h2.append(reloaddiv);
+                        reloaddiv.setStyle('display', 'inline-block');
+                        reloader = Y.one('.dockeditempanel_hd .block_culactivity_stream_reload');
+                        if (reloader) {
+                            reloader.on('click', this.reloadblock, this);
+                        }
+                    }
+                },this);
+            },this);
+        },this);
     },
 
     filltobelowblock: function() {
@@ -85,8 +108,8 @@ M.block_culactivity_stream.scroll = {
         if (num <= this.count) {
             // disable the scroller until this completes
             this.scroller.detach('scroll');
-            Y.one('#block_culactivity_stream_reload').setStyle('display', 'none');
-            Y.one('#block_culactivity_stream_loading').setStyle('display', 'inline-block');
+            Y.one('.block_culactivity_stream_reload').setStyle('display', 'none');
+            Y.one('.block_culactivity_stream_loading').setStyle('display', 'inline-block');
 
             var params = {
                 sesskey : M.cfg.sesskey,
@@ -113,13 +136,13 @@ M.block_culactivity_stream.scroll = {
                         if (!data.end) {
                             this.scroller.on('scroll', this.filltobelowblock, this);
                         }
-                        Y.one('#block_culactivity_stream_loading').setStyle('display', 'none');
-                        Y.one('#block_culactivity_stream_reload').setStyle('display', 'inline-block');
+                        Y.one('.block_culactivity_stream_loading').setStyle('display', 'none');
+                        Y.one('.block_culactivity_stream_reload').setStyle('display', 'inline-block');
                     },
                     failure: function() {
                         // error message
-                        Y.one('#block_culactivity_stream_loading').setStyle('display', 'none');
-                        Y.one('#block_culactivity_stream_reload').setStyle('display', 'inline-block');
+                        Y.one('.block_culactivity_stream_loading').setStyle('display', 'none');
+                        Y.one('.block_culactivity_stream_reload').setStyle('display', 'inline-block');
                         this.timer.cancel();
                     }
                 }
@@ -134,8 +157,8 @@ M.block_culactivity_stream.scroll = {
             lastid = this.scroller.one('li').get('id').split('_')[1];
         }
 
-        Y.one('#block_culactivity_stream_reload').setStyle('display', 'none');
-        Y.one('#block_culactivity_stream_loading').setStyle('display', 'inline-block');
+        Y.one('.block_culactivity_stream_reload').setStyle('display', 'none');
+        Y.one('.block_culactivity_stream_loading').setStyle('display', 'inline-block');
 
         var params = {
             sesskey : M.cfg.sesskey,
@@ -156,13 +179,13 @@ M.block_culactivity_stream.scroll = {
                         Y.one('.block_culactivity_stream .notifications').prepend(data.output);
                         this.count = this.count + data.count;
                     }
-                    Y.one('#block_culactivity_stream_loading').setStyle('display', 'none');
-                    Y.one('#block_culactivity_stream_reload').setStyle('display', 'inline-block');
+                    Y.one('.block_culactivity_stream_loading').setStyle('display', 'none');
+                    Y.one('.block_culactivity_stream_reload').setStyle('display', 'inline-block');
                 },
                 failure: function() {
                     // error message
-                    Y.one('#block_culactivity_stream_loading').setStyle('display', 'none');
-                    Y.one('#block_culactivity_stream_reload').setStyle('display', 'inline-block');
+                    Y.one('.block_culactivity_stream_loading').setStyle('display', 'none');
+                    Y.one('.block_culactivity_stream_reload').setStyle('display', 'inline-block');
                     this.timer.cancel();
                 }
             }
@@ -194,4 +217,15 @@ M.block_culactivity_stream.scroll = {
 
 };
 
-}, '@VERSION@', {"requires": ["base", "node", "io", "json-parse", "dom-core", "querystring"]});
+}, '@VERSION@', {
+    "requires": [
+        "base",
+        "node",
+        "io",
+        "json-parse",
+        "dom-core",
+        "querystring",
+        "event-custom",
+        "moodle-core-dock"
+    ]
+});

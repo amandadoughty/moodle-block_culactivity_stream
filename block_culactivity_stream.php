@@ -36,7 +36,6 @@ class block_culactivity_stream extends block_base {
      * The htmltitle of the block to be displayed in the block title area.
      * @public string $htmltitle
      */
-    public $htmltitle = null;
 
     /**
      * Initialiser
@@ -124,5 +123,5 @@ class block_culactivity_stream extends block_base {
     public function has_config() {
         return true;
     }
-
 }
+
