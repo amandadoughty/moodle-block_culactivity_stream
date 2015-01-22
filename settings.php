@@ -28,5 +28,5 @@ defined('MOODLE_INTERNAL') || die;
 
 if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configtext('block_culactivity_stream_gravatar', get_string('gravatardefaulturl', 'admin'),
-                       get_string('gravatardefaulturl_help', 'admin'), 'identicon'));
+                       get_string('gravatardefaulturl_help', 'admin'), 'mm'));
 }

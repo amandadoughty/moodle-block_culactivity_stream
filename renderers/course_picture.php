@@ -267,7 +267,7 @@ class course_picture implements renderable {
                 }
             }
 
-        } else if (!empty($CFG->block_culactivity_stream_gravatar)) {
+        } else if ($CFG->enablegravatar) {
             // Normalise the size variable to acceptable bounds.
             if ($size < 1 || $size > 512) {
                 $size = 35;
@@ -281,21 +281,26 @@ class course_picture implements renderable {
             if (empty($CFG->block_culactivity_stream_gravatar)) {
                 $absoluteimagepath = $page->theme->resolve_image_location('u/f2', 'core');
                 if (strpos($absoluteimagepath, $CFG->dirroot) === 0) {
-                    $gravatardefault = $CFG->wwwroot . substr($absoluteimagepath, strlen($CFG->dirroot));
+                    $defaulturl = $CFG->wwwroot . substr($absoluteimagepath, strlen($CFG->dirroot));
                 } else {
-                    $gravatardefault = $CFG->wwwroot . '/pix/u/f2.png';
+                    $defaulturl = $CFG->wwwroot . '/pix/u/f2.png';
                 }
             } else {
                 $gravatardefault = $CFG->block_culactivity_stream_gravatar;
-            }
-
-            // If the currently requested page is https then we'll return an
-            // https gravatar page.
-            if (strpos($CFG->httpswwwroot, 'https:') === 0) {
-                $gravatardefault = str_replace($CFG->wwwroot, $CFG->httpswwwroot, $gravatardefault); // Replace by secure url.
-                return new moodle_url("https://secure.gravatar.com/avatar/{$md5}", array('s' => $size, 'd' => $gravatardefault));
-            } else {
-                return new moodle_url("http://www.gravatar.com/avatar/{$md5}", array('s' => $size, 'd' => $gravatardefault));
+                // If the currently requested page is https then we'll return an
+                // https gravatar page.
+                if (strpos($CFG->httpswwwroot, 'https:') === 0) {
+                    $gravatardefault = str_replace($CFG->wwwroot, $CFG->httpswwwroot, $gravatardefault); // Replace by secure url.
+                    return new moodle_url(
+                        "https://secure.gravatar.com/avatar/{$md5}",
+                        array('s' => $size, 'd' => $gravatardefault)
+                        );
+                } else {
+                    return new moodle_url(
+                        "http://www.gravatar.com/avatar/{$md5}",
+                        array('s' => $size, 'd' => $gravatardefault)
+                        );
+                }
             }
         }
 
