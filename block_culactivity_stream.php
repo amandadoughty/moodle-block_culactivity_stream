@@ -41,7 +41,12 @@ class block_culactivity_stream extends block_base {
      * Initialiser
      */
     public function init() {
-        $this->title = get_string('activitystream', 'block_culactivity_stream');
+        global $COURSE;
+        if ($COURSE->id != SITEID) {
+            $this->title = get_string('activitystreamcourse', 'block_culactivity_stream');
+        } else {
+            $this->title = get_string('activitystreamsite', 'block_culactivity_stream');
+        }
     }
 
     /**

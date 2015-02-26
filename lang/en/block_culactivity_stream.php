@@ -24,7 +24,8 @@
  *
  */
 
-$string['activitystream'] = 'Activity Feed';
+$string['activitystreamcourse'] = 'Module updates';
+$string['activitystreamsite'] = 'Activity Feed';
 $string['culactivity_stream:addinstance'] = 'Add a new Activity Feed block';
 $string['culactivity_stream:myaddinstance'] = 'Add a new Activity Feed block';
 $string['anon'] = 'Avatar of Anon';

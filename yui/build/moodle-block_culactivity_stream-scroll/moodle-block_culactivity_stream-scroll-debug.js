@@ -39,7 +39,7 @@ M.block_culactivity_stream.scroll = {
             Y.one('.pages').hide();
         }
 
-        var reloaddiv = Y.one('.reload');
+        var reloaddiv = Y.one('.block_culactivity_stream .reload');
         var h2 = Y.one('.block_culactivity_stream .header .title h2');
         h2.append(reloaddiv);
         reloaddiv.setStyle('display', 'inline-block');
@@ -60,17 +60,20 @@ M.block_culactivity_stream.scroll = {
         var dock = M.core.dock.get();
         dock.on(['dock:initialised', 'dock:itemadded'], function() {
             Y.Array.each(dock.dockeditems, function(dockeditem) {
+                Y.log(dockeditem.get('dockItemNode'));
                 dockeditem.on('dockeditem:showcomplete', function() {
-                    var reloader = Y.one('.dockeditempanel_hd .block_culactivity_stream_reload');
-                    if (!reloader) {
-                        var reloaddiv = Y.one('.reload').cloneNode(true);
-                        var h2 = Y.one('.dockeditempanel_hd h2');
-                        h2.append(reloaddiv);
-                        reloaddiv.setStyle('display', 'inline-block');
-                        reloader = Y.one('.dockeditempanel_hd .block_culactivity_stream_reload');
-                    }
-                    if (reloader) {
-                        reloader.on('click', this.reloadblock, this);
+                    if (dockeditem.get('blockclass') == 'culactivity_stream') {
+                        var reloader = Y.one('.dockeditempanel_hd .block_culactivity_stream_reload');
+                        if (!reloader) {
+                            var reloaddiv = Y.one('.block_culactivity_stream .reload').cloneNode(true);
+                            var h2 = Y.one('#instance-' + dockeditem.get('blockinstanceid') + '-header' );
+                            h2.append(reloaddiv);
+                            reloaddiv.setStyle('display', 'inline-block');
+                            reloader = Y.one('.dockeditempanel_hd .block_culactivity_stream_reload');
+                        }
+                        if (reloader) {
+                            reloader.on('click', this.reloadblock, this);
+                        }
                     }
                 },this);
             },this);
