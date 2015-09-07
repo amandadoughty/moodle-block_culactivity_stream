@@ -78,8 +78,7 @@ class block_culactivity_stream_renderers_course_picture_renderer extends plugin_
         global $CFG, $DB;
 
         $course = $coursepicture->course;
-        $coursedisplayname = preg_match('/\A\s*\z/', trim($course->idnumber)) ?
-            $course->shortname : $course->idnumber;
+        $coursedisplayname = $course->shortname;
 
         if ($coursepicture->alttext) {
             $alt = get_string('pictureof', '', $coursedisplayname);

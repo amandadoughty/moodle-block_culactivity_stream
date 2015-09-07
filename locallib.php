@@ -168,10 +168,7 @@ function block_culactivity_stream_get_course_displayname ($courseid) {
 
     $course = $DB->get_record('course', array('id' => $courseid));
 
-    $coursedisplayname = preg_match('/\A\s*\z/', trim($course->idnumber)) ?
-        $course->shortname : $course->idnumber;
-
-    return $coursedisplayname;
+    return $course->shortname;
 }
 
 /**
