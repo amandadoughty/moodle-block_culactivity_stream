@@ -84,7 +84,7 @@ class block_culactivity_stream_renderer extends plugin_renderer_base {
      * @param int $page page that user is on if no JS
      * @return string $output html
      */
-    public function culactivity_stream_items ($notifications, $page) {
+    public function culactivity_stream_items ($notifications, $page = 1) {
         $output = '';
         $times = array();
 
