@@ -46,7 +46,7 @@ class block_culactivity_stream_renderer extends plugin_renderer_base {
         $output = '';
         $id = html_writer::random_id('culactivity_stream');
         // Start content generation.
-        $output = html_writer::start_tag('div', array(
+        $output .= html_writer::start_tag('div', array(
             'id' => $id,
             'class' => 'culactivity_stream'));
         $output .= html_writer::start_tag('ul', array('class' => 'notifications'));
@@ -96,19 +96,18 @@ class block_culactivity_stream_renderer extends plugin_renderer_base {
                     'class' => $class)
                 );
             $output .= html_writer::start_tag('div', array('class' => 'clearfix notifictionitem'));
-            $output .= html_writer::start_tag('div', array('class' => 'coursepicture'));
 
             // Avatar.
             $output .= html_writer::start_tag('div', array('class' => 'avatar'));
             $output .= empty($notification->img) ? '' : $notification->img;
-            $output .= html_writer::end_tag('div');
+            $output .= html_writer::end_tag('div'); // Closing div: .avatar.
 
             // Text.
             $output .= html_writer::start_tag('div', array('class' => 'notificationtext'));
             $output .= html_writer::start_tag('span');
-            $output .= $output .= htmlspecialchars($notification->smallmessage . ' ', ENT_QUOTES, 'UTF-8');
+            $output .= htmlspecialchars($notification->smallmessage . ' ', ENT_QUOTES, 'UTF-8');
             $output .= html_writer::end_tag('span');
-            $output .= html_writer::end_tag('div');
+            $output .= html_writer::end_tag('div'); // Closing div: .notificationtext.
 
             // Activity icon.
             $output .= html_writer::start_tag('div', array('class' => 'activityicon'));
