@@ -39,11 +39,19 @@ M.block_culactivity_stream.scroll = {
             Y.one('.pages').hide();
         }
 
-        var reloaddiv = Y.one('.block_culactivity_stream .reload');
-        var h2 = Y.one('.block_culactivity_stream .header .title h2');
-        h2.append(reloaddiv);
-        reloaddiv.setStyle('display', 'inline-block');
-        Y.one('.reload .block_culactivity_stream_reload').on('click', this.reloadblock, this);
+        try {
+            var reloaddiv = Y.one('.block_culactivity_stream .reload');
+            var block = Y.one('.block_culactivity_stream');
+            var id = block.get('id');
+            id = id.replace('inst', '');
+            var h2 = Y.one('#instance-' + id + '-header');
+            h2.append(reloaddiv);
+            reloaddiv.setStyle('display', 'inline-block');
+            Y.one('.reload .block_culactivity_stream_reload').on('click', this.reloadblock, this);
+        } catch (e) {
+            Y.log('Problem adding reload button');
+        }
+
         Y.all('.block_culactivity_stream .removelink').on('click', this.removenotification, this);
         this.scroller = Y.one('.block_culactivity_stream .culactivity_stream');
         this.scroller.on('scroll', this.filltobelowblock, this);
@@ -63,16 +71,20 @@ M.block_culactivity_stream.scroll = {
                 Y.log(dockeditem.get('dockItemNode'));
                 dockeditem.on('dockeditem:showcomplete', function() {
                     if (dockeditem.get('blockclass') == 'culactivity_stream') {
-                        var reloader = Y.one('.dockeditempanel_hd .block_culactivity_stream_reload');
-                        if (!reloader) {
-                            var reloaddiv = Y.one('.block_culactivity_stream .reload').cloneNode(true);
-                            var h2 = Y.one('#instance-' + dockeditem.get('blockinstanceid') + '-header' );
-                            h2.append(reloaddiv);
-                            reloaddiv.setStyle('display', 'inline-block');
-                            reloader = Y.one('.dockeditempanel_hd .block_culactivity_stream_reload');
-                        }
-                        if (reloader) {
-                            reloader.on('click', this.reloadblock, this);
+                        try{
+                            var reloader = Y.one('.dockeditempanel_hd .block_culactivity_stream_reload');
+                            if (!reloader) {
+                                var reloaddiv = Y.one('.block_culactivity_stream .reload').cloneNode(true);
+                                var h2 = Y.one('#instance-' + dockeditem.get('blockinstanceid') + '-header' );
+                                h2.append(reloaddiv);
+                                reloaddiv.setStyle('display', 'inline-block');
+                                reloader = Y.one('.dockeditempanel_hd .block_culactivity_stream_reload');
+                            }
+                            if (reloader) {
+                                reloader.on('click', this.reloadblock, this);
+                            }
+                        } catch (e) {
+                            Y.log('Problem adding reload button');
                         }
                     }
                 },this);
@@ -84,6 +96,7 @@ M.block_culactivity_stream.scroll = {
         var scrollHeight = this.scroller.get('scrollHeight');
         var scrollTop = this.scroller.get('scrollTop');
         var clientHeight = this.scroller.get('clientHeight');
+        var lastid;
 
         if ((scrollHeight - (scrollTop + clientHeight)) < 10) {
             // Pause the automatic refresh
@@ -125,7 +138,7 @@ M.block_culactivity_stream.scroll = {
 
             Y.io(M.cfg.wwwroot + '/blocks/culactivity_stream/scroll_ajax.php', {
                 method: 'POST',
-                data: build_querystring(params),
+                data: window.build_querystring(params),
                 context: this,
                 on: {
                     success: function(id, e) {
@@ -171,7 +184,7 @@ M.block_culactivity_stream.scroll = {
 
         Y.io(M.cfg.wwwroot + '/blocks/culactivity_stream/reload_ajax.php', {
             method: 'POST',
-            data: build_querystring(params),
+            data: window.build_querystring(params),
             context: this,
             on: {
                 success: function(id, e) {

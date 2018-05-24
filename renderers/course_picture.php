@@ -235,7 +235,7 @@ class course_picture implements renderable {
             $size = (int)$this->size;
         }
 
-        $defaulturl = $renderer->pix_url('u/f2'); // Default image.
+        $defaulturl = $renderer->image_url('u/f2'); // Default image.
 
         if ((!empty($CFG->forcelogin) and !isloggedin()) ||
             (!empty($CFG->forceloginforprofileimage) && (!isloggedin() || isguestuser()))) {

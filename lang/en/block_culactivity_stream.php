@@ -33,6 +33,7 @@ $string['avatarof'] = 'Avatar of {$a}';
 $string['newer'] = 'newer';
 $string['older'] = 'older';
 $string['pluginname'] = 'CUL Activity Feed Block';
+$string['privacy:metadata'] = 'The CUL Activity Stream block only displays existing message data.';
 $string['reload'] = 'Refresh Feed';
 $string['second'] = 'second';
 $string['time'] = 'about {$a} ago';

@@ -193,7 +193,7 @@ function block_culactivity_stream_get_course_img ($courseid) {
         $coursepic->class = 'coursepicture';
         $courseimg = $courseimgrenderer->render($coursepic);
     } else {
-        $url = $OUTPUT->pix_url('u/f2');
+        $url = $OUTPUT->image_url('u/f2');
         $attributes = array(
             'src' => $url,
             'alt' => get_string('pictureof', '', $coursedisplayname),
@@ -225,7 +225,7 @@ function block_culactivity_stream_get_user_img ($userid) {
         $userpic->class = 'personpicture';
         $userimg = $OUTPUT->render($userpic);
     } else {
-        $url = $OUTPUT->pix_url('u/f2');
+        $url = $OUTPUT->image_url('u/f2');
         $attributes = array(
             'src' => $url,
             'alt' => get_string('anon', 'block_culactivity_stream'),
