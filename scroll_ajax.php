@@ -29,11 +29,7 @@ define('AJAX_SCRIPT', true);
 require_once(dirname(__FILE__) . '/../../config.php');
 require_once(dirname(__FILE__) . '/locallib.php');
 
-if (!confirm_sesskey()) {
-    $error = array('error' => get_string('invalidsesskey', 'error'));
-    die(json_encode($error));
-}
-
+require_sesskey();
 require_login();
 
 $PAGE->set_context(context_system::instance());
