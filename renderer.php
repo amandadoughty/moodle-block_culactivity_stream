@@ -33,6 +33,8 @@ require_once('renderers/course_picture.php');
  */
 class block_culactivity_stream_renderer extends plugin_renderer_base {
 
+    public $instanceid = null;
+
     /**
      * Function for rendering the notification wrapper
      *
@@ -41,15 +43,17 @@ class block_culactivity_stream_renderer extends plugin_renderer_base {
      * @param int $page page that user is on if no JS
      * @return string $output html
      */
-    public function culactivity_stream($notifications, $page) {
+    public function culactivity_stream($notifications, $page, $instanceid) {
         global $USER;
+
+        $this->instanceid = $instanceid;
         $output = '';
         $id = html_writer::random_id('culactivity_stream');
         // Start content generation.
-        $output .= html_writer::start_tag('div', array(
+        $output .= html_writer::start_tag('div', [
             'id' => $id,
-            'class' => 'culactivity_stream'));
-        $output .= html_writer::start_tag('ul', array('class' => 'notifications'));
+            'class' => 'culactivity_stream']);
+        $output .= html_writer::start_tag('ul', ['class' => 'notifications']);
         $output .= $this->culactivity_stream_items ($notifications, $page);
         $output .= html_writer::end_tag('ul');
         $output .= html_writer::end_tag('div');
@@ -67,9 +71,10 @@ class block_culactivity_stream_renderer extends plugin_renderer_base {
         // Reload button.
         $reloadimg = $this->output->pix_icon('i/reload', '', 'moodle',
                 array('class' => 'smallicon'));
+        $reloadsr = html_writer::tag('span', get_string('reload', 'block_culactivity_stream'), ['class' => 'accesshide']);
         $reloadurl = $this->page->url;
         $reloadattr = array('class' => 'block_culactivity_stream_reload');
-        $output .= html_writer::link($reloadurl, $reloadimg, $reloadattr);
+        $output .= html_writer::link($reloadurl, $reloadimg . $reloadsr, $reloadattr);
         // Loading gif.
         $ajaximg = $this->output->pix_icon('i/loading_small', '');
         $output .= html_writer::tag('span', $ajaximg, array('class' => 'block_culactivity_stream_loading'));
@@ -155,7 +160,13 @@ class block_culactivity_stream_renderer extends plugin_renderer_base {
             }
 
             $removeurl = new moodle_url('/blocks/culactivity_stream/remove_post.php',
-                    array('remove' => $notification->id, 'block_culactivity_stream_page' => $page, 'sesskey' => sesskey()));
+                    ['remove' => $notification->id,
+                        'block_culactivity_stream_page' => $page,
+                        'sesskey' => sesskey(),
+                        'returnurl' => $this->page->url,
+                        'anchor' => 'inst' . $this->instanceid
+                    ]
+                );
             $output .= html_writer::link($removeurl, get_string('remove'),
                     array('class' => 'removelink'));
             $output .= html_writer::end_tag('div'); // Closing div: .contexturls.
@@ -176,13 +187,17 @@ class block_culactivity_stream_renderer extends plugin_renderer_base {
      * @return string $output html
      */
     public function culactivity_stream_pagination($prev=false, $next=false) {
+        global $PAGE;
+        
+        $baseurl = $PAGE->url;
+        $anchor = 'inst' . $this->instanceid;
         $output = '';
 
         if ($prev || $next) {
-            $output .= html_writer::start_tag('div', array('class' => 'pages'));
+            $output .= html_writer::start_tag('div', ['class' => 'pages']);
 
             if ($prev) {
-                $prevurl = new moodle_url('/my/index.php', array('block_culactivity_stream_page' => $prev));
+                $prevurl = new moodle_url($baseurl, ['block_culactivity_stream_page' => $prev], $anchor);
                 $prevtext = get_string('newer', 'block_culactivity_stream');
                 $output .= html_writer::link($prevurl, $prevtext);
             }
@@ -192,7 +207,7 @@ class block_culactivity_stream_renderer extends plugin_renderer_base {
             }
 
             if ($next) {
-                $nexturl = new moodle_url('/my/index.php', array('block_culactivity_stream_page' => $next));
+                $nexturl = new moodle_url($baseurl, ['block_culactivity_stream_page' => $next], $anchor);
                 $nexttext = get_string('older', 'block_culactivity_stream');
                 $output .= html_writer::link($nexturl, $nexttext);
             }

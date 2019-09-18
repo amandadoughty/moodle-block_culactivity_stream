@@ -75,7 +75,7 @@ class block_culactivity_stream extends block_base {
         list($count, $notifications) = block_culactivity_stream_get_notifications($COURSE->id, 0, $limitfrom, $limitnum);
         $renderer = $this->page->get_renderer('block_culactivity_stream');
         $this->content->text = $renderer->culactivity_stream_reload();
-        $this->content->text .= $renderer->culactivity_stream($notifications, $page);
+        $this->content->text .= $renderer->culactivity_stream($notifications, $page, $this->instance->id);
 
         $prev = false;
         $next = false;

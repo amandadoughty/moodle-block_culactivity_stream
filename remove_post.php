@@ -32,14 +32,12 @@ require_login();
 
 $remove = required_param('remove', PARAM_INT);
 $page = optional_param('block_culactivity_stream_page', 1, PARAM_RAW);
+$returnurl = required_param('returnurl', PARAM_RAW);
+$anchor = required_param('anchor', PARAM_RAW);
 
 // Soft delete.
 block_culactivity_stream_remove_notification($remove);
+redirect(new moodle_url($returnurl, ['block_culactivity_stream_page' => $page], $anchor));
 
-if ($page > 1) {
-    redirect(new moodle_url('/my/index.php', array('block_culactivity_stream_page' => $page)));
-} else {
-    redirect(new moodle_url('/my'));
-}
 
 

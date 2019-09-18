@@ -88,7 +88,7 @@ function block_culactivity_stream_get_notifications($courseid=SITEID, $lastid=0,
         }
 
         // If we have the course id then get the course image or a default
-        // gravatar.
+        // pattern.
         if (isset($notification->courseid) && $notification->courseid != 0 && $notification->courseid != SITEID) {
             $notification->img = block_culactivity_stream_get_course_img($notification->courseid);
         } else { // Else get the user image.
@@ -133,12 +133,12 @@ function block_culactivity_stream_human_timing ($time) {
     $time = time() - $time; // To get the time since that moment.
 
     $tokens = array (
-        31536000 => get_string('year'),
-        2592000 => get_string('month'),
-        604800 => get_string('week'),
-        86400 => get_string('day'),
-        3600 => get_string('hour'),
-        60 => get_string('minute'),
+        31536000 => get_string('year', 'block_culactivity_stream'),
+        2592000 => get_string('month', 'block_culactivity_stream'),
+        604800 => get_string('week', 'block_culactivity_stream'),
+        86400 => get_string('day', 'block_culactivity_stream'),
+        3600 => get_string('hour', 'block_culactivity_stream'),
+        60 => get_string('minute', 'block_culactivity_stream'),
         1 => get_string('second', 'block_culactivity_stream')
     );
 
@@ -149,7 +149,7 @@ function block_culactivity_stream_human_timing ($time) {
         }
 
         $numberofunits = floor($time / $unit);
-        return $numberofunits.' '.$text.(($numberofunits > 1) ? 's' : '');
+        return $numberofunits . ' ' . $text . (($numberofunits > 1) ? get_string('plural', 'block_culactivity_stream') : '');
     }
 }
 
