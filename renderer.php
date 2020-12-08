@@ -47,6 +47,7 @@ class block_culactivity_stream_renderer extends plugin_renderer_base {
         global $USER;
 
         $this->instanceid = $instanceid;
+        $returnurl = $this->page->url->out();
         $output = '';
         $id = html_writer::random_id('culactivity_stream');
         // Start content generation.
@@ -54,7 +55,7 @@ class block_culactivity_stream_renderer extends plugin_renderer_base {
             'id' => $id,
             'class' => 'culactivity_stream']);
         $output .= html_writer::start_tag('ul', ['class' => 'notifications']);
-        $output .= $this->culactivity_stream_items ($notifications, $page);
+        $output .= $this->culactivity_stream_items ($notifications, $returnurl, $instanceid, $page);
         $output .= html_writer::end_tag('ul');
         $output .= html_writer::end_tag('div');
         return $output;
@@ -89,7 +90,7 @@ class block_culactivity_stream_renderer extends plugin_renderer_base {
      * @param int $page page that user is on if no JS
      * @return string $output html
      */
-    public function culactivity_stream_items ($notifications, $page = 1) {
+    public function culactivity_stream_items ($notifications, $returnurl, $instanceid, $page = 1) {
         $output = '';
         $times = array();
 
@@ -110,7 +111,7 @@ class block_culactivity_stream_renderer extends plugin_renderer_base {
             // Text.
             $output .= html_writer::start_tag('div', array('class' => 'notificationtext'));
             $output .= html_writer::start_tag('span');
-            $output .= htmlspecialchars($notification->smallmessage . ' ', ENT_QUOTES, 'UTF-8');
+            $output .= strip_tags($notification->smallmessage);
             $output .= html_writer::end_tag('span');
             $output .= html_writer::end_tag('div'); // Closing div: .notificationtext.
 
@@ -163,8 +164,8 @@ class block_culactivity_stream_renderer extends plugin_renderer_base {
                     ['remove' => $notification->id,
                         'block_culactivity_stream_page' => $page,
                         'sesskey' => sesskey(),
-                        'returnurl' => $this->page->url,
-                        'anchor' => 'inst' . $this->instanceid
+                        'returnurl' => $returnurl,
+                        'anchor' => 'inst' . $instanceid
                     ]
                 );
             $output .= html_writer::link($removeurl, get_string('remove'),

@@ -38,6 +38,8 @@ $limitfrom = required_param('limitfrom', PARAM_INT);
 $limitnum = required_param('limitnum', PARAM_INT);
 $lastid = required_param('lastid', PARAM_INT);
 $courseid = required_param('courseid', PARAM_INT);
+$returnurl = required_param('returnurl', PARAM_RAW);
+$instanceid = required_param('instanceid', PARAM_INT);
 $list = '';
 $end = false;
 
@@ -46,7 +48,7 @@ list($count, $notifications) = block_culactivity_stream_get_notifications($cours
 
 $renderer = $PAGE->get_renderer('block_culactivity_stream');
 if ($notifications) {
-    $list .= $renderer->culactivity_stream_items ($notifications);
+    $list .= $renderer->culactivity_stream_items ($notifications, $returnurl, $instanceid);
 } else {
     $list .= '<li>No more notifications</li>';
     $end = true;

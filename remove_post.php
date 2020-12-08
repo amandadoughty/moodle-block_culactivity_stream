@@ -34,10 +34,11 @@ $remove = required_param('remove', PARAM_INT);
 $page = optional_param('block_culactivity_stream_page', 1, PARAM_RAW);
 $returnurl = required_param('returnurl', PARAM_RAW);
 $anchor = required_param('anchor', PARAM_RAW);
+$sesskey = required_param('sesskey', PARAM_RAW);
 
 // Soft delete.
 block_culactivity_stream_remove_notification($remove);
-redirect(new moodle_url($returnurl, ['block_culactivity_stream_page' => $page], $anchor));
+redirect(new moodle_url($returnurl, ['block_culactivity_stream_page' => $page, 'sesskey' => $sesskey], $anchor));
 
 
 

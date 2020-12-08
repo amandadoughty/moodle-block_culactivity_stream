@@ -186,7 +186,6 @@ class course_picture implements renderable {
         }
     }
 
-
     /**
      * Works out the URL for the course picture.
      *
@@ -198,7 +197,7 @@ class course_picture implements renderable {
      * @return moodle_url
      */
     public function get_url(moodle_page $page, renderer_base $renderer = null) {
-        global $CFG, $DB;
+        global $CFG, $DB, $OUTPUT;
 
         if (is_null($renderer)) {
             $renderer = $page->get_renderer('core');
@@ -236,7 +235,7 @@ class course_picture implements renderable {
             }
 
         } else {
-            return \core_course\external\course_summary_exporter::get_course_pattern($this->course);
+            return $OUTPUT->get_generated_image_for_id($this->course->id);
         }
 
         return $defaulturl;

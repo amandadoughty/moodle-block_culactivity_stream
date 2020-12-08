@@ -40,6 +40,8 @@ $PAGE->set_context(context_system::instance());
 
 $lastid = required_param('lastid', PARAM_INT);
 $courseid = required_param('courseid', PARAM_INT);
+$returnurl = required_param('returnurl', PARAM_RAW);
+$instanceid = required_param('instanceid', PARAM_INT);
 $list = '';
 
 // Get more notifications.
@@ -47,7 +49,7 @@ list($count, $notifications) = block_culactivity_stream_get_notifications($cours
 
 $renderer = $PAGE->get_renderer('block_culactivity_stream');
 if ($notifications) {
-    $list .= $renderer->culactivity_stream_items ($notifications);
+    $list .= $renderer->culactivity_stream_items ($notifications, $returnurl, $instanceid);
 }
 
 echo json_encode(array('output' => $list, 'count' => $count));

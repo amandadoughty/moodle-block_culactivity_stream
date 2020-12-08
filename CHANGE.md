@@ -1,5 +1,12 @@
+### Date: 		2019-Nov-19
+### Version:	v2019031202
+### Release:    3.8.0
+
+- Removed code in scroll.js for attaching event when block is undocked.
+- Changed version and release numbers so that whole set is in sync.
+
 ### Date: 		2019-Mar-12
-### Version:	v2019031200
+### Version:	v2019031201
 ### Release:    3.6.0
 
 - Updated Privacy API functions.

@@ -94,7 +94,14 @@ class block_culactivity_stream extends block_base {
 
         $this->page->requires->yui_module('moodle-block_culactivity_stream-scroll',
                 'M.block_culactivity_stream.scroll.init',
-                array(array('limitnum' => $limitnum, 'count' => $count, 'courseid' => $COURSE->id)));
+                [[
+                    'limitnum' => $limitnum,
+                    'count' => $count,
+                    'courseid' => $COURSE->id,
+                    'returnurl' => $this->page->url->out(),
+                    'instanceid' => $this->instance->id
+                ]]
+            );
 
         return $this->content;
     }
@@ -126,7 +133,23 @@ class block_culactivity_stream extends block_base {
     }
 
     public function has_config() {
-        return true;
+        return false;
+    }
+
+    /**
+     * Return the plugin config settings for external functions.
+     *
+     * @return stdClass the configs for both the block instance and plugin
+     * @since Moodle 3.8
+     */
+    public function get_config_for_external() {
+        // Return all settings for all users since it is safe (no private keys, etc..).
+        $configs = !empty($this->config) ? $this->config : new stdClass();
+
+        return (object) [
+            'instance' => $configs,
+            'plugin' => new stdClass(),
+        ];
     }
 }
 

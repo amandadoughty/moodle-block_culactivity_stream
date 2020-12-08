@@ -39,6 +39,8 @@ M.block_culactivity_stream.scroll = {
             Y.one('.pages').hide();
         }
 
+        var doc = Y.one(Y.config.doc);
+
         try {
             var reloaddiv = Y.one('.block_culactivity_stream .reload');
             var block = Y.one('.block_culactivity_stream');
@@ -47,49 +49,22 @@ M.block_culactivity_stream.scroll = {
             var h2 = Y.one('#instance-' + id + '-header');
             h2.append(reloaddiv);
             reloaddiv.setStyle('display', 'inline-block');
-            Y.one('.reload .block_culactivity_stream_reload').on('click', this.reloadblock, this);
+            doc.delegate('click', this.reloadblock, '.block_culactivity_stream_reload', this);
         } catch (e) {
             Y.log('Problem adding reload button');
         }
 
-        Y.all('.block_culactivity_stream .removelink').on('click', this.removenotification, this);
+        doc.delegate('click', this.removenotification, '.block_culactivity_stream .removelink', this);
         this.scroller = Y.one('.block_culactivity_stream .culactivity_stream');
         this.scroller.on('scroll', this.filltobelowblock, this);
         this.limitnum = params.limitnum;
         this.count = params.count;
         this.courseid = params.courseid;
+        this.returnurl = params.returnurl;
+        this.instanceid = params.instanceid;
         // Refresh the feed every 5 mins.
         this.timer = Y.later(1000 * 60 * 5, this, this.reloadnotifications, [], true);
         this.filltobelowblock();
-        // When the block is docked. the reload link is created on the fly as the block
-        // is shown. This means that the click event is not attached. Here we listen for
-        // published events about changes to the dock so that we can reattach the click
-        // event to the reload link.
-        var dock = M.core.dock.get();
-        dock.on(['dock:initialised', 'dock:itemadded'], function() {
-            Y.Array.each(dock.dockeditems, function(dockeditem) {
-                Y.log(dockeditem.get('dockItemNode'));
-                dockeditem.on('dockeditem:showcomplete', function() {
-                    if (dockeditem.get('blockclass') == 'culactivity_stream') {
-                        try{
-                            var reloader = Y.one('.dockeditempanel_hd .block_culactivity_stream_reload');
-                            if (!reloader) {
-                                var reloaddiv = Y.one('.block_culactivity_stream .reload').cloneNode(true);
-                                var h2 = Y.one('#instance-' + dockeditem.get('blockinstanceid') + '-header' );
-                                h2.append(reloaddiv);
-                                reloaddiv.setStyle('display', 'inline-block');
-                                reloader = Y.one('.dockeditempanel_hd .block_culactivity_stream_reload');
-                            }
-                            if (reloader) {
-                                reloader.on('click', this.reloadblock, this);
-                            }
-                        } catch (e) {
-                            Y.log('Problem adding reload button');
-                        }
-                    }
-                },this);
-            },this);
-        },this);
     },
 
     filltobelowblock: function() {
@@ -133,7 +108,9 @@ M.block_culactivity_stream.scroll = {
                 limitnum: this.limitnum,
                 lastid : lastid,
                 newer: false,
-                courseid: this.courseid
+                courseid: this.courseid,
+                returnurl: this.returnurl,
+                instanceid: this.instanceid
             };
 
             Y.io(M.cfg.wwwroot + '/blocks/culactivity_stream/scroll_ajax.php', {
@@ -179,7 +156,9 @@ M.block_culactivity_stream.scroll = {
         var params = {
             sesskey : M.cfg.sesskey,
             lastid : lastid,
-            courseid: this.courseid
+            courseid: this.courseid,
+            returnurl: this.returnurl,
+            instanceid: this.instanceid
         };
 
         Y.io(M.cfg.wwwroot + '/blocks/culactivity_stream/reload_ajax.php', {
