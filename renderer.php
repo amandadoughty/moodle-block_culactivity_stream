@@ -74,7 +74,10 @@ class block_culactivity_stream_renderer extends plugin_renderer_base {
                 array('class' => 'smallicon'));
         $reloadsr = html_writer::tag('span', get_string('reload', 'block_culactivity_stream'), ['class' => 'accesshide']);
         $reloadurl = $this->page->url;
-        $reloadattr = array('class' => 'block_culactivity_stream_reload');
+        $reloadattr = [
+            'id' => 'block_culactivity_stream_reload',
+            'class' => 'block_culactivity_stream_reload'
+        ];
         $output .= html_writer::link($reloadurl, $reloadimg . $reloadsr, $reloadattr);
         // Loading gif.
         $ajaximg = $this->output->pix_icon('i/loading_small', '');
@@ -188,9 +191,7 @@ class block_culactivity_stream_renderer extends plugin_renderer_base {
      * @return string $output html
      */
     public function culactivity_stream_pagination($prev=false, $next=false) {
-        global $PAGE;
-        
-        $baseurl = $PAGE->url;
+        $baseurl = $this->page->url;
         $anchor = 'inst' . $this->instanceid;
         $output = '';
 

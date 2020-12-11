@@ -24,6 +24,8 @@
  *
  */
 
+defined('MOODLE_INTERNAL') || die();
+
 require_once($CFG->dirroot.'/blocks/culactivity_stream/locallib.php');
 
 
@@ -108,12 +110,11 @@ class block_culactivity_stream extends block_base {
 
     /**
      * Returns a list of formats, and whether the block
-     * should be displayed within them. culactivity_stream should
-     * only be displayed within courses.
+     * should be displayed within them.
      * @return array(string => boolean) List of formats
      */
     public function applicable_formats() {
-        return array('site' => true, 'my-index' => true, 'course' => true);
+        return array('site' => true, 'my' => true, 'course' => true);
     }
 
     /**

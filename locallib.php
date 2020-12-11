@@ -24,8 +24,9 @@
  *
  */
 
-require_once($CFG->dirroot.'/course/lib.php');
+defined('MOODLE_INTERNAL') || die();
 
+require_once($CFG->dirroot.'/course/lib.php');
 
 /**
  * Function to retrieve notifications

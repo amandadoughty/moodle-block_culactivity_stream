@@ -15,23 +15,18 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version details
+ * Defines message providers (types of messages being sent)
  *
  * @package    block
  * @subpackage culactivity_stream
- * @copyright  2013 Amanda Doughty <amanda.doughty.1@city.ac.uk>
+ * @copyright  2020 Amanda Doughty <amanda.doughty.1@city.ac.uk>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  *
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2020121000;        // The current plugin version (Date: YYYYMMDDXX).
-$plugin->requires  = 2019111800;        // Requires this Moodle version.
-$plugin->component = 'block_culactivity_stream'; // Full name of the plugin (used for diagnostics).
-$plugin->maturity = MATURITY_STABLE;
-$plugin->release = '3.9.0 (Build: 2020121000)';
-
-$plugin->dependencies = array(
-    'message_culactivity_stream' => ANY_VERSION
-);
+$messageproviders = [
+    // Used for Behat tests.
+    'fake_notification' => []
+];
