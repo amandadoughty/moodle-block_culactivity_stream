@@ -100,7 +100,7 @@ EOF;
     }
 
     /**
-     * Scrolls down the activity feed.
+     * Creates a fake notification.
      *
      * @When /^new notification "(?P<notification_string>[^"]*)" is created$/
      *
@@ -108,6 +108,7 @@ EOF;
     public function new_notification_is_created ($notification) {
         $user = $this->get_session_user();
         $eventdata = new \core\message\message();
+        $eventdata->courseid = 1;
         $eventdata->name = 'fake_notification';
         $eventdata->component = 'block_culactivity_stream';
         $eventdata->userfrom = $user;
@@ -115,12 +116,13 @@ EOF;
         $eventdata->fullmessage = $notification;
         $eventdata->fullmessageformat = FORMAT_PLAIN;
         $eventdata->fullmessagehtml = $notification;
+        $eventdata->smallmessage = $notification;
         $eventdata->notification = 1;
         $eventdata->userto = $user;
         $messageid = message_send($eventdata);
 
         if (!$messageid) {
-            throw new Exception('boo');
+            throw new Exception(get_string('messageerror', 'block_culactivity_stream'));
         }
     }
 }

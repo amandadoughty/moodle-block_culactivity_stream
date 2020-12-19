@@ -25,18 +25,20 @@
  */
 
 $string['activitystreamcourse'] = 'Module updates';
-$string['activitystreamsite'] = 'Activity Feed';
+$string['activitystreamsite'] = 'Activity feed';
 $string['culactivity_stream:addinstance'] = 'Add a new Activity Feed block';
 $string['culactivity_stream:myaddinstance'] = 'Add a new Activity Feed block';
 $string['anon'] = 'Avatar of Anon';
 $string['avatarof'] = 'Avatar of {$a}';
 $string['day'] = 'day';
 $string['hour'] = 'hour';
+$string['messageerror'] = 'Error sending message';
 $string['minute'] = 'minute';
 $string['month'] = 'month';
 $string['newer'] = 'newer';
+$string['nomorenotifications'] = 'No more notifications';
 $string['older'] = 'older';
-$string['pluginname'] = 'Activity Feed';
+$string['pluginname'] = 'CUL Activity Feed';
 $string['plural'] = 's';
 $string['privacy:metadata'] = 'The CUL Activity Stream block only displays existing message data.';
 $string['reload'] = 'Refresh Feed';

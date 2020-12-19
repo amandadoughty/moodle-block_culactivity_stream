@@ -45,12 +45,12 @@ $end = false;
 
 // Get more notifications.
 list($count, $notifications) = block_culactivity_stream_get_notifications($courseid, $lastid, $limitfrom, $limitnum, false);
-
 $renderer = $PAGE->get_renderer('block_culactivity_stream');
+
 if ($notifications) {
     $list .= $renderer->culactivity_stream_items ($notifications, $returnurl, $instanceid);
 } else {
-    $list .= '<li>No more notifications</li>';
+    $list .= html_writer::tag('li', get_string('nomorenotifications', 'block_culactivity_stream'));
     $end = true;
 }
 
