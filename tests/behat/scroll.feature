@@ -1,17 +1,17 @@
 @block @cul @block_culactivity_stream @block_culactivity_stream_scroll @javascript
-Feature: Activity stream block scroll
+Feature: UL Activity Feed block scroll
   In order to be kept informed
   As a user
-  I can scroll the Activity Feed block to view more notifications
+  I can scroll the CUL Activity Feed block to view more notifications
 
   Background:
-    # This will make sure CUL activity stream notifications are enabled and create
+    # This will make sure CUL Activity Feed notifications are enabled and create
     # two assignment notifications. One for the student submitting their
     # assignment and another for the teacher grading it.
     Given the following "courses" exist:
         | fullname | shortname | category | groupmode |
         | Course 1 | C1 | 0 | 1 |
-    # Make sure the activity stream notifications are enabled for assignments.
+    # Make sure the CUL Activity Feed block notifications are enabled for assignments.
     And the following config values are set as admin:
         | culactivity_stream_provider_mod_assign_assign_notification_permitted | permitted | message |
         | message_provider_mod_assign_assign_notification_loggedin | culactivity_stream | message |
@@ -47,7 +47,7 @@ Feature: Activity stream block scroll
       | Online text | I'm the student first submission |
     And I press "Save changes"
     And I log out
-  
+
   Scenario: Scrolling loads more notifications
     Given I log in as "teacher1"
     And I am on "Course 1" course homepage with editing mode on
@@ -106,7 +106,7 @@ Feature: Activity stream block scroll
     And I press "Save changes"
     And the following "last access times" exist:
         | user | course | lastaccess |
-        | student1 | C1 | ##yesterday## |    
+        | student1 | C1 | ##yesterday## |
     And I log out
     And I log in as "student1"
     # Confirm the feed is showing only 5 items.

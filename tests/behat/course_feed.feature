@@ -1,18 +1,18 @@
 @block @cul @block_culactivity_stream @block_culactivity_stream_course_feed @javascript
-Feature: Activity stream block used in a course
+Feature: CUL Activity Feed block used in a course
   In order to be kept informed
   As a user
   I see a feed of relevant notifications in my course
 
   Background:
-    # This will make sure CUL activity stream notifications are enabled and create
+    # This will make sure CUL Activity Feed block notifications are enabled and create
     # two assignment notifications. One for the student submitting their
     # assignment and another for the teacher grading it.
     Given the following "courses" exist:
         | fullname | shortname | category | groupmode |
         | Course 1 | C1 | 0 | 1 |
         | Course 2 | C2 | 0 | 1 |
-    # Make sure the activity stream notifications are enabled for assignments.
+    # Make sure the CUL Activity Feed block notifications are enabled for assignments.
     And the following config values are set as admin:
         | culactivity_stream_provider_mod_assign_assign_notification_permitted | permitted | message |
         | message_provider_mod_assign_assign_notification_loggedin | culactivity_stream |   message |
@@ -60,10 +60,10 @@ Feature: Activity stream block used in a course
     And I press "Save changes"
     And the following "last access times" exist:
         | user | course | lastaccess |
-        | student1 | C1 | ##yesterday## |    
+        | student1 | C1 | ##yesterday## |
     And I log out
 
-  Scenario: Activity stream shows new notifications
+  Scenario: CUL Activity Feed block shows new notifications
     When I log in as "student1"
     And I am on "Course 1" course homepage
     # Confirm the feed is showing one new notification.
@@ -80,4 +80,3 @@ Feature: Activity stream block used in a course
     And I should not see "You have submitted your assignment submission for Test assignment name 1" in the "block_culactivity_stream" "block"
     And I should see "You have submitted your assignment submission for Test assignment name 2" in the "block_culactivity_stream" "block"
     And I log out
-    

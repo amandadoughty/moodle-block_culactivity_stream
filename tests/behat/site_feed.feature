@@ -1,18 +1,18 @@
 @block @cul @block_culactivity_stream @block_culactivity_stream_site_feed @javascript
-Feature: Activity stream block used on the frontpage
+Feature: CUL Activity Feed block used on the frontpage
   In order to be kept informed
   As a user
   I see a feed of all notifications on the front page
 
   Background:
-    # This will make sure CUL activity stream notifications are enabled and create
+    # This will make sure CUL Activity Feed notifications are enabled and create
     # two assignment notifications. One for the student submitting their
     # assignment and another for the teacher grading it.
     Given the following "courses" exist:
         | fullname | shortname | category | groupmode |
         | Course 1 | C1 | 0 | 1 |
         | Course 2 | C2 | 0 | 1 |
-    # Make sure the activity stream notifications are enabled for assignments.
+    # Make sure the activity feed notifications are enabled for assignments.
     And the following config values are set as admin:
         | culactivity_stream_provider_mod_assign_assign_notification_permitted | permitted | message |
         | message_provider_mod_assign_assign_notification_loggedin | culactivity_stream | message |
@@ -64,10 +64,10 @@ Feature: Activity stream block used on the frontpage
     And I press "Save changes"
     And the following "last access times" exist:
         | user | course | lastaccess |
-        | student1 | C1 | ##yesterday## |    
+        | student1 | C1 | ##yesterday## |
     And I log out
 
-  Scenario: Activity stream shows new notifications
+  Scenario: CUL Activity Feed block shows new notifications
     When I log in as "student1"
     # Confirm the feed is showing two new notifications.
     Then I should see "2" "new" items in feed
@@ -75,14 +75,14 @@ Feature: Activity stream block used on the frontpage
     # Confirm the submission notification is visible.
     And I should see "You have submitted your assignment submission for Test assignment name 1" in the "block_culactivity_stream" "block"
     And I should see "You have submitted your assignment submission for Test assignment name 2" in the "block_culactivity_stream" "block"
-    
+
   Scenario: Clicking view opens relevant page
     Given I log in as "student1"
     And I click on "Visit" "link" in the "You have submitted your assignment submission for Test assignment name 1" "list_item"
     And "title[text() = 'C1: Test assignment name 1']" "xpath_element" should exist in the "head" "css_element"
     And the following "last access times" exist:
         | user | course | lastaccess |
-        | student1 | C1 | ##tomorrow## |    
+        | student1 | C1 | ##tomorrow## |
     And I log out
     And I log in as "student1"
     # Confirm the feed is showing one visited notification.

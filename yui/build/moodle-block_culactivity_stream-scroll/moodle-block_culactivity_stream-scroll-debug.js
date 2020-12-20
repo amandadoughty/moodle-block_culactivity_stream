@@ -104,7 +104,6 @@ M.block_culactivity_stream.scroll = {
 
             var params = {
                 sesskey : M.cfg.sesskey,
-                limitfrom: 0,
                 limitnum: this.limitnum,
                 lastid : lastid,
                 newer: false,

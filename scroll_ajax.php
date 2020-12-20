@@ -34,7 +34,6 @@ require_login();
 
 $PAGE->set_context(context_system::instance());
 
-$limitfrom = required_param('limitfrom', PARAM_INT);
 $limitnum = required_param('limitnum', PARAM_INT);
 $lastid = required_param('lastid', PARAM_INT);
 $courseid = required_param('courseid', PARAM_INT);
@@ -44,7 +43,7 @@ $list = '';
 $end = false;
 
 // Get more notifications.
-list($count, $notifications) = block_culactivity_stream_get_notifications($courseid, $lastid, $limitfrom, $limitnum, false);
+list($count, $notifications) = block_culactivity_stream_get_notifications($courseid, $lastid, 0, $limitnum, false);
 $renderer = $PAGE->get_renderer('block_culactivity_stream');
 
 if ($notifications) {

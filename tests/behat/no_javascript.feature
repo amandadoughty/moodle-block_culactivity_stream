@@ -1,11 +1,11 @@
 @block @cul @block_culactivity_stream @block_culactivity_stream_no_javascript
-Feature: Activity stream block with no JS
+Feature: CUL Activity Feed block with no JS
   In order to be kept informed
   As a user
   I can use the Activity Feed block with JS disabled
 
   Background:
-    # This will make sure CUL activity stream notifications are enabled and create
+    # This will make sure CUL Activity Feed notifications are enabled and create
     # two assignment notifications. One for the student submitting their
     # assignment and another for the teacher grading it.
     Given the following "courses" exist:
@@ -30,7 +30,7 @@ Feature: Activity stream block with no JS
     And I log in as "admin"
     And I navigate to "Appearance > Default Dashboard page" in site administration
     And I press "Blocks editing on"
-    And I add the "Activity Feed" block if not present
+    And I add the "Activity feed" block if not present
     And I press "Reset Dashboard for all users"
     And I log out
     And I log in as "teacher1"
@@ -51,7 +51,7 @@ Feature: Activity stream block with no JS
     And I press "Save changes"
     And the following "last access times" exist:
         | user | course | lastaccess |
-        | student1 | C1 | ##yesterday## |    
+        | student1 | C1 | ##yesterday## |
     And I log out
 
   Scenario: Notifications are paged with JS disabled
@@ -118,4 +118,3 @@ Feature: Activity stream block with no JS
     Then I should see "1" "new" items in feed
     And I follow "newer"
     Then I should see "5" "new" items in feed
-

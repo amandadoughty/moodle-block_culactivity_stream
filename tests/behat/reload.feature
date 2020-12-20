@@ -1,17 +1,17 @@
 @block @cul @block_culactivity_stream @block_culactivity_stream_reload @javascript
-Feature: Activity stream block automatic reload
+Feature: CUL Activity Feedblock automatic reload
   In order to be kept informed
   As a user
   I see new notifications in the Activity Feed block
 
   Background:
-    # This will make sure CUL activity stream notifications are enabled and create
+    # This will make sure CUL Activity Feed block  notifications are enabled and create
     # two assignment notifications. One for the student submitting their
     # assignment and another for the teacher grading it.
     Given the following "courses" exist:
         | fullname | shortname | category | groupmode |
         | Course 1 | C1 | 0 | 1 |
-    # Make sure the activity stream notifications are enabled for assignments.
+    # Make sure the CUL Activity Feed block notifications are enabled for assignments.
     And the following config values are set as admin:
         | culactivity_stream_provider_mod_assign_assign_notification_permitted | permitted | message |
         | culactivity_stream_provider_block_culactivity_stream_fake_notification_permitted | permitted | message |
@@ -51,23 +51,23 @@ Feature: Activity stream block automatic reload
     And I press "Save changes"
     And the following "last access times" exist:
         | user | course | lastaccess |
-        | student1 | C1 | ##yesterday## |    
+        | student1 | C1 | ##yesterday## |
     And I log out
 
   Scenario: Feed refreshes when reloaded
     Given I log in as "student1"
     And I am on homepage
     Then I should see "1" "new" items in feed
-    And new notification "I am a fake notification" is created    
-    And I click on "Refresh Feed" "link"    
+    And new notification "I am a fake notification" is created
+    And I click on "Refresh Feed" "link"
     Then I should see "2" "new" items in feed
+    And "I am a fake notification" "list_item" should appear before "Test assignment name" "list_item"
 
   Scenario: Feed refreshes every 5 mins
     Given I log in as "student1"
     And I am on homepage
     Then I should see "1" "new" items in feed
-    And new notification "I am a fake notification" is created    
-    And I wait "310" seconds    
+    And new notification "I am a fake notification" is created
+    And I wait "310" seconds
     Then I should see "2" "new" items in feed
-
-
+    And "I am a fake notification" "list_item" should appear before "Test assignment name" "list_item"
