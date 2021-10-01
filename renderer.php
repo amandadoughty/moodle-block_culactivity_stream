@@ -218,7 +218,5 @@ class block_culactivity_stream_renderer extends plugin_renderer_base {
         }
 
         return $output;
-
     }
-
 }

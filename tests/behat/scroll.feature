@@ -1,5 +1,5 @@
 @block @cul @block_culactivity_stream @block_culactivity_stream_scroll @javascript
-Feature: UL Activity Feed block scroll
+Feature: CUL Activity Feed block scroll
   In order to be kept informed
   As a user
   I can scroll the CUL Activity Feed block to view more notifications
@@ -27,7 +27,7 @@ Feature: UL Activity Feed block scroll
     And I log in as "admin"
     And I navigate to "Appearance > Default Dashboard page" in site administration
     And I press "Blocks editing on"
-    And I add the "CUL Activity Feed" block if not present
+    And I add the CUL Activity Feed block
     And I press "Reset Dashboard for all users"
     And I log out
     And I log in as "teacher1"

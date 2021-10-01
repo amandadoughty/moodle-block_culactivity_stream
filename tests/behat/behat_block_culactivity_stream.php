@@ -41,6 +41,25 @@ use Behat\Mink\Exception\ExpectationException as ExpectationException;
 class behat_block_culactivity_stream extends behat_base {
 
     /**
+     * Adds the CUL Activity block. Editing mode must be previously enabled.
+     *
+     * @Given /^I add the CUL Activity Feed block$/
+     */
+    public function i_add_the_cul_activity_feed_block() {
+        try {
+            // Try with pluginname (Boost flat navigation).
+            $this->execute('behat_blocks::i_add_the_block', ['CUL Activity Feed']);
+        } catch (Exception $e) {
+            // Try with block title (Classic Add a block).
+            try {
+                $this->execute('behat_blocks::i_add_the_block', ['Activity feed']);
+            } catch (Exception $e) {
+                $this->execute('behat_blocks::i_add_the_block', ['Module updates']);
+            }
+        }
+    }
+
+    /**
      * Checks the number of items in the feed.
      *
      * @Then /^I should see "(?P<number_string>[^"]*)" "(?P<status_string>[^"]*)" items in feed$/

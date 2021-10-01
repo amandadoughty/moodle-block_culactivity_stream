@@ -9,8 +9,8 @@ Feature: CUL Activity Feed block with no JS
     # two assignment notifications. One for the student submitting their
     # assignment and another for the teacher grading it.
     Given the following "courses" exist:
-        | fullname | shortname | category | groupmode |
-        | Course 1 | C1 | 0 | 1 |
+        | fullname | shortname | category |
+        | Course 1 | C1 | 0 |
     # Make sure the activity stream notifications are enabled for assignments.
     And the following config values are set as admin:
         | culactivity_stream_provider_mod_assign_assign_notification_permitted | permitted | message |
@@ -27,19 +27,22 @@ Feature: CUL Activity Feed block with no JS
         | user | course | role |
         | teacher1 | C1 | editingteacher |
         | student1 | C1 | student |
+    And the following "activity" exists:
+        | activity | assign |
+        | course | C1 |
+        | idnumber | 0001 |
+        | name | Test assignment name |
+        | intro | Submit your online text |
+        | section | 1 |
+        | assignsubmission_file_enabled | 0 |
+        | assignsubmission_onlinetext_enabled | 1 |
+        | submissiondrafts | 0 |
     And I log in as "admin"
     And I navigate to "Appearance > Default Dashboard page" in site administration
     And I press "Blocks editing on"
-    And I add the "Activity feed" block if not present
+    And I add the CUL Activity Feed block
     And I press "Reset Dashboard for all users"
-    And I log out
-    And I log in as "teacher1"
-    And I am on "Course 1" course homepage with editing mode on
-    And I add a "Assignment" to section "1" and I fill the form with:
-        | Assignment name | Test assignment name |
-        | Description | Submit your online text |
-        | assignsubmission_onlinetext_enabled | 1 |
-        | assignsubmission_file_enabled | 0 |
+    And I press "Continue"
     And I log out
     And I log in as "student1"
     And I am on "Course 1" course homepage
@@ -55,34 +58,56 @@ Feature: CUL Activity Feed block with no JS
     And I log out
 
   Scenario: Notifications are paged with JS disabled
-    Given I log in as "teacher1"
-    And I am on "Course 1" course homepage with editing mode on
-    And I add a "Assignment" to section "1" and I fill the form with:
-        | Assignment name | Test assignment name 2 |
-        | Description | Submit your online text |
-        | assignsubmission_onlinetext_enabled | 1 |
+    Given the following "activity" exists:
+        | activity | assign |
+        | course | C1 |
+        | idnumber | 0002 |
+        | name | Test assignment name 2 |
+        | intro | Submit your online text |
+        | section | 1 |
         | assignsubmission_file_enabled | 0 |
-    And I add a "Assignment" to section "1" and I fill the form with:
-        | Assignment name | Test assignment name 3 |
-        | Description | Submit your online text |
         | assignsubmission_onlinetext_enabled | 1 |
+        | submissiondrafts | 0 |
+    And the following "activity" exists:
+        | activity | assign |
+        | course | C1 |
+        | idnumber | 0003 |
+        | name | Test assignment name 3 |
+        | intro | Submit your online text |
+        | section | 1 |
         | assignsubmission_file_enabled | 0 |
-    And I add a "Assignment" to section "1" and I fill the form with:
-        | Assignment name | Test assignment name 4 |
-        | Description | Submit your online text |
         | assignsubmission_onlinetext_enabled | 1 |
+        | submissiondrafts | 0 |
+    And the following "activity" exists:
+        | activity | assign |
+        | course | C1 |
+        | idnumber | 0004 |
+        | name | Test assignment name 4 |
+        | intro | Submit your online text |
+        | section | 1 |
         | assignsubmission_file_enabled | 0 |
-    And I add a "Assignment" to section "1" and I fill the form with:
-        | Assignment name | Test assignment name 5 |
-        | Description | Submit your online text |
         | assignsubmission_onlinetext_enabled | 1 |
+        | submissiondrafts | 0 |
+    And the following "activity" exists:
+        | activity | assign |
+        | course | C1 |
+        | idnumber | 0005 |
+        | name | Test assignment name 5 |
+        | intro | Submit your online text |
+        | section | 1 |
         | assignsubmission_file_enabled | 0 |
-    And I add a "Assignment" to section "1" and I fill the form with:
-        | Assignment name | Test assignment name 6 |
-        | Description | Submit your online text |
         | assignsubmission_onlinetext_enabled | 1 |
+        | submissiondrafts | 0 |
+    And the following "activity" exists:
+        | activity | assign |
+        | course | C1 |
+        | idnumber | 0006 |
+        | name | Test assignment name 6 |
+        | intro | Submit your online text |
+        | section | 1 |
         | assignsubmission_file_enabled | 0 |
-    And I log out
+        | assignsubmission_onlinetext_enabled | 1 |
+        | submissiondrafts | 0 |
     And I log in as "student1"
     And I am on "Course 1" course homepage
     And I follow "Test assignment name 2"
