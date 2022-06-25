@@ -1,3 +1,10 @@
+### Date: 		2022-Jun-25
+### Version:	v2022062500
+### Release:    4.0.0
+
+- Updated behat tests
+- Refactored to use new activity icons
+
 ### Date: 		2019-Nov-19
 ### Version:	v2019031202
 ### Release:    3.8.0

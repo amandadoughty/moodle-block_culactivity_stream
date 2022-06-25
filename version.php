@@ -26,11 +26,11 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2021100100;        // The current plugin version (Date: YYYYMMDDXX).
-$plugin->requires  = 2021051700;        // Requires this Moodle version.
+$plugin->version   = 2022062500;        // The current plugin version (Date: YYYYMMDDXX).
+$plugin->requires  = 2022041900;        // Requires this Moodle version.
 $plugin->component = 'block_culactivity_stream'; // Full name of the plugin (used for diagnostics).
 $plugin->maturity = MATURITY_STABLE;
-$plugin->release = '3.11.0 (Build: 2021100100)';
+$plugin->release = '4.0.0 (Build: 2022062500)';
 
 $plugin->dependencies = array(
     'message_culactivity_stream' => ANY_VERSION

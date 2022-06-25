@@ -120,15 +120,22 @@ class block_culactivity_stream_renderer extends plugin_renderer_base {
 
             // Activity icon.
             $output .= html_writer::start_tag('div', array('class' => 'activityicon'));
+            $plugin = explode('_', $notification->component);
+
+            if (reset($plugin) == 'mod') {
+                $icon = 'monologo';
+            } else {
+                $icon = $notification->icon;
+            }
 
             // TODO move this logic?
             if ($this->page->theme->resolve_image_location(
-                    $notification->icon,
+                    $icon,
                     $notification->component,
                     true)
                 ) {
                 $output .= $this->output->pix_icon(
-                    $notification->icon,
+                    $icon,
                     $notification->title,
                     $notification->component,
                     array('class' => 'icon')
